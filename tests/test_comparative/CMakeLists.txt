@@ -10,4 +10,6 @@ set(SOURCES
 
 add_executable(test_comparative ${SOURCES})
 
-add_test(test_comparative test_comparative)
+add_test(NAME test_comparative
+    COMMAND test_comparative
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

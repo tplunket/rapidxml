@@ -10,4 +10,6 @@ set(SOURCES
     )
 add_executable(test_speed ${SOURCES})
 
-add_test(test_speed test_speed)
+add_test(NAME test_speed
+    COMMAND test_speed
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
