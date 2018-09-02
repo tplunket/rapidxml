@@ -1985,6 +1985,7 @@ public:
 			)
 				? true : false; //Return true if matches above, else false.
 		}
+        return false;
 	}
 	//<summary>Set attribute to std::string.</summary>
 	//<param name="rhs">Value std::string to set.</param>
@@ -2206,9 +2207,9 @@ public:
 	protected:
 		forward_class<xml_node> _wrap; //Wrapper for xml_node.
 	public:
-		xml_node_iterator() : _wrap(), xml_iterator<xml_node,long,xml_node*,xml_node&>() {} //Default constructor.
-		xml_node_iterator(xml_node_struct* vref,long sscr = 0) : _wrap(), xml_iterator<xml_node,long,xml_node*,xml_node&>(vref,sscr) { } //Initializing constructor.
-		xml_node_iterator(const xml_node_iterator& r) : _wrap(), xml_iterator<xml_node,long,xml_node*,xml_node&>(r) { } //Copy constructor.
+		xml_node_iterator() {} //Default constructor.
+		xml_node_iterator(xml_node_struct* vref,long sscr = 0) : xml_iterator<xml_node,long,xml_node*,xml_node&>(vref,sscr) { } //Initializing constructor.
+		xml_node_iterator(const xml_node_iterator& r) : xml_iterator<xml_node,long,xml_node*,xml_node&>(r) { } //Copy constructor.
 		virtual bool good() //Internal validity.
 		{
 			if
@@ -2257,9 +2258,9 @@ public:
 	protected:
 		forward_class<xml_attribute> _wrap;
 	public:
-		xml_attribute_iterator() : _wrap(), xml_iterator<xml_attribute,long,xml_attribute*,xml_attribute&>() {} //Default constructor.
-		xml_attribute_iterator(xml_node_struct* vref,long sscr = 0) : _wrap(), xml_iterator<xml_attribute,long,xml_attribute*,xml_attribute&>(vref,sscr) { } //Initializing constructor.
-		xml_attribute_iterator(const xml_attribute_iterator& r) : _wrap(), xml_iterator<xml_attribute,long,xml_attribute*,xml_attribute&>(r) { } //Copy constructor.
+		xml_attribute_iterator() {} //Default constructor.
+		xml_attribute_iterator(xml_node_struct* vref,long sscr = 0) : xml_iterator<xml_attribute,long,xml_attribute*,xml_attribute&>(vref,sscr) { } //Initializing constructor.
+		xml_attribute_iterator(const xml_attribute_iterator& r) : xml_iterator<xml_attribute,long,xml_attribute*,xml_attribute&>(r) { } //Copy constructor.
 		virtual bool good() //Internal validity check.
 		{
 			if
@@ -3536,9 +3537,9 @@ public:
 		_xmldoc(0),
 			_growby(growby),
 			_autdel(autdel),
-			_optmsk(optmsk),
 			_buffer(0),
-			_strpos(0)
+			_strpos(0),
+			_optmsk(optmsk)
 #ifdef PUGOPT_MEMFIL
 			,
 			_mmfile(0),
@@ -3563,9 +3564,9 @@ public:
 		_xmldoc(0),
 			_growby(growby),
 			_autdel(autdel),
-			_optmsk(optmsk),
 			_buffer(0),
-			_strpos(0)
+			_strpos(0),
+			_optmsk(optmsk)
 #ifdef PUGOPT_MEMFIL
 			,
 			_mmfile(0),
@@ -3871,6 +3872,8 @@ protected:
 //<summary>An array of nodes, used by xml_node queries.</summary>
 class xml_node_list: public pointer_array
 {
+private:
+    void* at(unsigned int);
 public:
 	xml_node_list(unsigned int grow = 4) : pointer_array(grow) { }
 	virtual ~xml_node_list(){ }

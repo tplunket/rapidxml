@@ -29,12 +29,12 @@ void test_name()
     CHECK(*doc.name() == 0);
     CHECK(doc.name_size() == 0);
 
-    char *foobar = "foobar";
+    const char *foobar = "foobar";
     doc.name(foobar, 6);
     CHECK(doc.name() == foobar);
     CHECK(doc.name_size() == 6);
 
-    char *gozo = "gozo";
+    const char *gozo = "gozo";
     doc.name(gozo);
     CHECK(doc.name() == gozo);
     CHECK(doc.name_size() == 4);
@@ -52,12 +52,12 @@ void test_value()
     CHECK(*doc.value() == 0);
     CHECK(doc.value_size() == 0);
 
-    char *foobar = "foobar";
+    const char *foobar = "foobar";
     doc.value(foobar, 6);
     CHECK(doc.value() == foobar);
     CHECK(doc.value_size() == 6);
 
-    char *gozo = "gozo";
+    const char *gozo = "gozo";
     doc.value(gozo);
     CHECK(doc.value() == gozo);
     CHECK(doc.value_size() == 4);
@@ -844,21 +844,24 @@ void test_search_next_attribute()
 void test_char_types()
 {
     xml_document<> doc1;
-    doc1.parse<parse_non_destructive>("<node attr=\"value\">value</node>");
+    char string1[] = "<node attr=\"value\">value</node>";
+    doc1.parse<parse_non_destructive>(string1);
     xml_node<> *node1 = doc1.first_node("node");
     CHECK(node1);
     xml_attribute<> *attr1 = node1->first_attribute("attr");
     CHECK(attr1);
 
     xml_document<char> doc2;
-    doc2.parse<parse_non_destructive>("<node attr=\"value\">value</node>");
+    char string2[] = "<node attr=\"value\">value</node>";
+    doc2.parse<parse_non_destructive>(string2);
     xml_node<char> *node2 = doc2.first_node("node");
     CHECK(node2);
     xml_attribute<char> *attr2 = node2->first_attribute("attr");
     CHECK(attr2);
 
     xml_document<wchar_t> doc3;
-    doc3.parse<parse_non_destructive>(L"<node attr=\"value\">value</node>");
+    wchar_t string3[] = L"<node attr=\"value\">value</node>";
+    doc3.parse<parse_non_destructive>(string3);
     xml_node<wchar_t> *node3 = doc3.first_node(L"node");
     CHECK(node3);
     xml_attribute<wchar_t> *attr3 = node3->first_attribute(L"attr");
