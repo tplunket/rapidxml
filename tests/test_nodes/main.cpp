@@ -6,6 +6,14 @@
     #pragma warning(disable:4127)   // Conditional expression is constant
 #endif
 
+#ifdef _WIN32
+    #define NL "\r\n"
+    #define NL_len 2
+#else
+    #define NL "\n"
+    #define NL_len 1
+#endif
+
 using namespace std;
 using namespace rapidxml;
 
@@ -95,13 +103,13 @@ void test_attribute_node()
     CHECK(attr->name_size() == 4);
     if (Flags & parse_normalize_whitespace)
     {
-        CHECK(value<Flags>(attr) == " \r\nfoo  bar\t");  // Whitespace is not normalized in attribute values
-        CHECK(attr->value_size() == 12);
+        CHECK(value<Flags>(attr) == " " NL "foo  bar\t");  // Whitespace is not normalized in attribute values
+        CHECK(attr->value_size() == 10 + NL_len);
     }
     else
     {
-        CHECK(value<Flags>(attr) == " \r\nfoo  bar\t");
-        CHECK(attr->value_size() == 12);
+        CHECK(value<Flags>(attr) == " " NL "foo  bar\t");
+        CHECK(attr->value_size() == 10 + NL_len);
     }
 }
 
@@ -269,7 +277,7 @@ void test_doctype_node()
         REQUIRE(doctype);
         CHECK(doctype->type() == node_doctype);
         CHECK(*doctype->name() == 0);
-        CHECK(value<Flags>(doctype) == "el1 [\r\n\t<!ELEMENT el1 EMPTY>\r\n]");
+        CHECK(value<Flags>(doctype) == "el1 [" NL "\t<!ELEMENT el1 EMPTY>" NL "]");
     }
 
 }
