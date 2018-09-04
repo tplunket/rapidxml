@@ -19,8 +19,6 @@
 #define PUGAPI_VERSION_MINOR 2
 #include "../other_parsers/pugxml/pugxml.h"
 
-#include <intrin.h>
-
 using namespace std;
 
 // Buffer used for parsing
@@ -49,6 +47,7 @@ namespace rapidxml
 
 #if defined(_MSC_VER)
 
+    #include <intrin.h>
     typedef unsigned __int64 tick_t;
     inline tick_t ticks()
     {
