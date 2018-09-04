@@ -143,7 +143,7 @@ two_xmls *create_two_xmls(const string &filename, bool tinyxml_fails)
             throw runtime_error(string("cannot open file ") + filename);
         stream.unsetf(ios::skipws);
         stream.seekg(0, ios::end);
-        size_t size = stream.tellg();
+        size_t size = static_cast<size_t>(stream.tellg());
         stream.seekg(0);   
         vector<char> data(size + 1);
         stream.read(&data.front(), static_cast<streamsize>(size));
@@ -158,7 +158,7 @@ two_xmls *create_two_xmls(const string &filename, bool tinyxml_fails)
             throw runtime_error(string("cannot open file ") + filename);
         stream.unsetf(ios::skipws);
         stream.seekg(0, ios::end);
-        size_t size = stream.tellg();
+        size_t size = static_cast<size_t>(stream.tellg());
         stream.seekg(0);   
         result->data.resize(size + 1);
         char *data = &result->data.front();

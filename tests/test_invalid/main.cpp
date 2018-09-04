@@ -22,7 +22,7 @@ void test_progressive_truncations()
         throw runtime_error(string("cannot open file ") + filename);
     stream.unsetf(ios::skipws);
     stream.seekg(0, ios::end);
-    size_t size = stream.tellg();
+    size_t size = static_cast<size_t>(stream.tellg());
     stream.seekg(0);   
     vector<char> original(size + 1);
     stream.read(&original.front(), static_cast<streamsize>(size));
@@ -68,7 +68,7 @@ void test_random_mutations()
         throw runtime_error(string("cannot open file ") + filename);
     stream.unsetf(ios::skipws);
     stream.seekg(0, ios::end);
-    size_t size = stream.tellg();
+    size_t size = static_cast<size_t>(stream.tellg());
     stream.seekg(0);   
     vector<char> original(size + 1);
     stream.read(&original.front(), static_cast<streamsize>(size));

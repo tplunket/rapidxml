@@ -2408,7 +2408,7 @@ namespace pugi
 
 		try
 		{
-			s = new char[length + 1];
+			s = new char[static_cast<size_t>(length + 1)];
 		}
 		catch (const std::bad_alloc&)
 		{

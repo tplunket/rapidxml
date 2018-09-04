@@ -1985,7 +1985,7 @@ public:
 			)
 				? true : false; //Return true if matches above, else false.
 		}
-        return false;
+                  return false;
 	}
 	//<summary>Set attribute to std::string.</summary>
 	//<param name="rhs">Value std::string to set.</param>
@@ -2486,7 +2486,7 @@ public:
 #ifdef PUGOPT_NONSEG
 						(valuelen < node->value_size)?valuelen:node->value_size;
 #else
-						(valuelen < strlen(node->value))?valuelen:strlen(node->value);
+						(valuelen < strlen(node->value))?valuelen:(unsigned int)strlen(node->value);
 #endif
 					strncpy(value,node->value,n);
 					value[n] = 0;
