@@ -56,12 +56,11 @@ namespace rapidxml
 
 #elif defined(__GNUC__)
 
-    typedef long long tick_t;
+    #include <x86intrin.h>
+    typedef unsigned long long tick_t;
     inline tick_t ticks()
     {
-        tick_t result;
-        __asm__ __volatile__ ("rdtsc" : "=A"(result));
-        return result;
+        return __rdtsc();
     }
 
 #else 
@@ -148,7 +147,7 @@ void test(const char *filename, const char *description)
     // On 2 GHz CPU this is 1/4000 of a second.
     // During 2 seconds (taking into account restoring of the data), this file is parsed 
     // several thousands of times.
-    tick_t min = 0;
+    tick_t min = INT_MAX;
     clock_t start = std::clock();
     while (std::clock() < start + 2 * CLOCKS_PER_SEC)   // 2 seconds
     {
@@ -158,7 +157,7 @@ void test(const char *filename, const char *description)
         tick_t t1 = ticks();    // 1st timing
         parser.parse(xml);
         tick_t t2 = ticks();    // 2nd timing
-        if (min == 0 || t2 - t1 < min)
+        if ((t2 - t1) < min)
             min = t2 - t1;
     }
     
