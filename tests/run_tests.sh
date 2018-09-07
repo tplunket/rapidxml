@@ -7,7 +7,7 @@ function run_generate () {
     local SOURCE_DIR="$2"
     if [[ $3 ]]
     then
-        local CONFIG="--config $3"
+        local CONFIG="-DCMAKE_BUILD_TYPE=$3"
     else
         local CONFIG=""
     fi
@@ -31,6 +31,12 @@ function run_test () {
     else
         local CONFIG=""
     fi
+
+    # to run individual tests:
+    # ctest -V -C Debug -R test_speed
+    # -V: verbose output
+    # -C: configuration
+    # -R: regex for test(s) to run
     ctest ${CONFIG}
 }
 
