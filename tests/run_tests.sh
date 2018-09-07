@@ -66,8 +66,12 @@ function build_make () {
     popd
 }
 
-build_xcode Debug
-build_xcode Release
+if [[ `uname` == 'Darwin' ]]
+then
+    build_xcode Debug
+    build_xcode Release
+fi
+
 build_make Debug
 build_make Release
 
